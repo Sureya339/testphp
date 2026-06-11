@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="bs5/css/bootstrap.min.css">
   <script src="bs5/css/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>showstudent</title>
 </head>
 
@@ -47,7 +48,7 @@
           <td>
             <div class="btn-group w-100">
           <a href="edit.php?id=<?php echo $row['std_id']; ?>" class="btn btn-warning w-100">แก้ไข</a>
-          <a href="delete.php?did=<?php echo $row['std_id']; ?>" class="btn btn-danger w-100">ลบ</a>
+          <a href="delete.php?did=<?php echo $row['std_id']; ?>" class="btn btn-danger w-100" onclick="confirmDelete(event)">ลบ</a>
           </div>
         </td>
         </tr>
@@ -62,5 +63,33 @@
     </div>
   </div>
 </body>
+
+
+<script>
+function confirmDelete(event) {
+    // 1. Prevent the default link redirection
+    event.preventDefault(); 
+    
+    // 2. Get the target URL from the href attribute
+    const urlToRedirect = event.currentTarget.getAttribute('href'); 
+
+    // 3. Fire the SweetAlert2 popup
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel'
+    }).then((result) => {
+        // 4. Redirect if user clicked "Yes"
+        if (result.isConfirmed) {
+            window.location.href = urlToRedirect;
+        }
+    });
+}
+</script>
 
 </html>
