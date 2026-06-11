@@ -1,0 +1,47 @@
+      <?php
+    include "connectdb.php";
+    $sql="SELECT * FROM `tb_student`";
+    $result=mysqli_query($con,$sql);
+    $num=mysqli_num_rows($result);
+    ?>
+
+    <h1 align="center">แสดงข้อมูลสมาชิก [<?php echo "จำนวณ".$num."คน";?>]</h1>
+
+    <table style="width:80%" border=1 align='center'>
+        <tr>
+    <th colspan="8">ข้อมูลนักเรียน</th>
+  </tr>
+  <tr>
+    <th>ลำดับ</th>
+    <th>ชื่อ</th>
+    <th>ที่อยู่</th>
+    <th>เบอร์โทร</th>
+    <th>อีเมล์</th>
+    <th>รหัสผ่าน</th>
+    <th>จัดการ</th>
+    <th>ลบ</th>
+  </tr>
+
+  <?php
+        $n=1;
+            while($row = mysqli_fetch_assoc($result)){
+        ?>
+  <tr>
+    <td align="center"><?php echo $n++;?></td>
+    <td><?php echo $row['std_name'];?></td>
+    <td><?php echo $row['std_address'];?></td>
+    <td><?php echo $row['std_mobile'];?></td>
+    <td><?php echo $row['std_email'];?></td>
+    <td><?php echo $row['std_password'];?></td>
+    <td><a href="edit.php?id=<?php echo $row['std_id'];?>">แก้ไข</a></td>
+    <td><a href="delete.php?did=<?php echo $row['std_id'];?>" >ลบ</a></td>
+  </tr>
+  <?php
+            }
+        ?>
+</table>
+
+<div class="bt">
+    <a href="addstd.php">add student</a>
+    <a href="login.php">logout</a>
+</div>
